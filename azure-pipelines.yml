@@ -38,7 +38,7 @@ steps:
   displayName: 'NuGet pack'
   inputs:
     command: pack
-    packagesToPack: 'src/FiscalBr.EFDFiscal/FiscalBr.EFDFiscal.csproj'    
+    packagesToPack: '**/FiscalBr.EFDFiscal.csproj'    
     versioningScheme: 'byPrereleaseNumber'
     majorVersion: '1'
     minorVersion: '0'
