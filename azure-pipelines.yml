@@ -39,7 +39,10 @@ steps:
   inputs:
     command: pack
     packagesToPack: 'src/FiscalBr.EFDFiscal/FiscalBr.EFDFiscal.csproj'    
-    versioningScheme: 'byBuildNumber'
+    versioningScheme: 'byPrereleaseNumber'
+    majorVersion: '1'
+    minorVersion: '0'
+    patchVersion: '0'
     packDestination: '$(Build.ArtifactStagingDirectory)'
 
 - task: NuGetCommand@2
@@ -49,9 +52,3 @@ steps:
     packagesToPush: '$(Build.ArtifactStagingDirectory)/**/*.nupkg;!$(Build.ArtifactStagingDirectory)/**/*.symbols.nupkg'
     nuGetFeedType: 'internal'
     publishVstsFeed: 'fe2e85a1-348e-4a42-9577-65254989f658'
-    
-- task: NuGetCommand@2
-  inputs:
-    command: 'pack'
-    packagesToPack: '**/*.csproj'
-    versioningScheme: 'byBuildNumber'
