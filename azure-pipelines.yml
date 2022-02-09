@@ -43,7 +43,7 @@ steps:
     majorVersion: '1'
     minorVersion: '0'
     patchVersion: '0'
-    packDestination: '$(Build.ArtifactStagingDirectory)'
+    packDestination: '$(Build.ArtifactStagingDirectory)net452/'
 
 - task: NuGetCommand@2
   displayName: 'NuGet push'
