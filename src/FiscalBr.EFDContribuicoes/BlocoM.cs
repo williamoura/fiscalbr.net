@@ -1,20 +1,20 @@
 ﻿using FiscalBr.Common;
 using FiscalBr.Common.Sped;
+using FiscalBr.Common.Sped.Interfaces;
 using System;
 using System.Collections.Generic;
 
 namespace FiscalBr.EFDContribuicoes
 {
-    public class BlocoM
+    public class BlocoM : IBlocoSped
     {
         public RegistroM001 RegM001 { get; set; }
         public RegistroM990 RegM990 { get; set; }
 
-        public class RegistroM001 : RegistroBaseSped
+        public class RegistroM001 : RegistroSped
         {
-            public RegistroM001()
+            public RegistroM001() : base("M001")
             {
-                Reg = "M001";
             }
 
             [SpedCampos(2, "IND_MOV", "C", 1, 0, true, 2)]
@@ -34,14 +34,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M100: CRÉDITO DE PIS/PASEP RELATIVO AO PERIODO
         /// </summary>
-        public class RegistroM100 : RegistroBaseSped
+        public class RegistroM100 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM100"/>
             /// </summary>
-            public RegistroM100()
+            public RegistroM100() : base("M100")
             {
-                Reg = "M100";
             }
 
             /// <summary>
@@ -144,14 +143,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M105: DETALHAMENTO DA BASE DE CALCULO DO CRÉDITO APURADO NO PERÍODO – PIS/PASEP
         /// </summary>
-        public class RegistroM105 : RegistroBaseSped
+        public class RegistroM105 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM105"/>.
             /// </summary>
-            public RegistroM105()
+            public RegistroM105() : base("M105")
             {
-                Reg = "M105";
             }
 
             /// <summary>
@@ -235,14 +233,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M110: AJUSTES DO CRÉDITO DE PIS/PASEP APURADO
         /// </summary>
-        public class RegistroM110 : RegistroBaseSped
+        public class RegistroM110 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM110" />.
             /// </summary>
-            public RegistroM110()
+            public RegistroM110() : base("M110")
             {
-                Reg = "M110";
             }
 
             /// <summary>
@@ -289,14 +286,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M115: DETALHAMENTO DOS AJUSTES DO CRÉDITO DE PIS/PASEP APURADO
         /// </summary>
-        public class RegistroM115 : RegistroBaseSped
+        public class RegistroM115 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM115" />.
             /// </summary>
-            public RegistroM115()
+            public RegistroM115() : base("M115")
             {
-                Reg = "M115";
             }
 
             /// <summary>
@@ -350,11 +346,10 @@ namespace FiscalBr.EFDContribuicoes
             public string InfoCompl { get; set; }
         }
 
-        public class RegistroM200 : RegistroBaseSped
+        public class RegistroM200 : RegistroSped
         {
-            public RegistroM200()
+            public RegistroM200() : base("M200")
             {
-                Reg = "M200";
             }
 
             [SpedCampos(2, "VL_TOT_CONT_NC_PER", "N", 0, 2, true, 2)]
@@ -397,11 +392,10 @@ namespace FiscalBr.EFDContribuicoes
             public List<RegistroM210> RegM210s { get; set; }
         }
 
-        public class RegistroM205 : RegistroBaseSped
+        public class RegistroM205 : RegistroSped
         {
-            public RegistroM205()
+            public RegistroM205() : base("M205")
             {
-                Reg = "M205";
             }
 
             [SpedCampos(2, "NUM_CAMPO", "C", 2, 0, true, 2)]
@@ -414,11 +408,10 @@ namespace FiscalBr.EFDContribuicoes
             public decimal VlDebito { get; set; }
         }
 
-        public class RegistroM210 : RegistroBaseSped
+        public class RegistroM210 : RegistroSped
         {
-            public RegistroM210()
+            public RegistroM210() : base("M210")
             {
-                Reg = "M210";
             }
 
             [SpedCampos(2, "COD_CONT", "C", 2, 0, true, 2)]
@@ -495,14 +488,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M211: Sociedades Cooperativas –Composição da Base de Calculo –PIS/Pasep
         /// </summary>
-        public class RegistroM211 : RegistroBaseSped
+        public class RegistroM211 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma instância da classe <see cref="RegistroM211"/>
             /// </summary>
-            public RegistroM211()
+            public RegistroM211() : base("M211")
             {
-                Reg = "M211";
             }
 
             /// <summary>
@@ -547,14 +539,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M215: Ajustes da Base de Cálculo da Contribuição para o PIS/Pasep Apurada
         /// </summary>
-        public class RegistroM215 : RegistroBaseSped
+        public class RegistroM215 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma instância da classe <see cref="RegistroM215"/>
             /// </summary>
-            public RegistroM215()
+            public RegistroM215() : base("M215")
             {
-                Reg = "M215";
             }
 
             /// <summary>
@@ -612,14 +603,12 @@ namespace FiscalBr.EFDContribuicoes
             /// </summary>
             [SpedCampos(10, "INFO_COMPL", "C", 0, 0, false, 2)]
             public string InfoCompl { get; set; }
-
         }
 
-        public class RegistroM220 : RegistroBaseSped
+        public class RegistroM220 : RegistroSped
         {
-            public RegistroM220()
+            public RegistroM220() : base("M220")
             {
-                Reg = "M220";
             }
 
             [SpedCampos(2, "IND_AJ", "C", 1, 0, true, 2)]
@@ -644,11 +633,10 @@ namespace FiscalBr.EFDContribuicoes
         }
 
         [SpedRegistros("01/10/2015", null)]
-        public class RegistroM225 : RegistroBaseSped
+        public class RegistroM225 : RegistroSped
         {
-            public RegistroM225()
+            public RegistroM225() : base("M225")
             {
-                Reg = "M225";
             }
 
             [SpedCampos(2, "DET_VALOR_AJ", "N", 0, 2, true, 2)]
@@ -679,14 +667,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M230: Informações Adicionais de Diferimento
         /// </summary>
-        public class RegistroM230 : RegistroBaseSped
+        public class RegistroM230 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma instância da classe <see cref="RegistroM230"/>
             /// </summary>
-            public RegistroM230()
+            public RegistroM230() : base("M230")
             {
-                Reg = "M230";
             }
 
             /// <summary>
@@ -724,21 +711,19 @@ namespace FiscalBr.EFDContribuicoes
             /// </summary>
             [SpedCampos(7, "COD_CRED", "C", 3, 0, false, 2)]
             public string CodCred { get; set; }
-
         }
 
         /// <summary>
         ///     REGISTRO M300: CONTRIBUIÇÃO DE PIS/PASEP DIFERIDA EM PREIODOS ANTERIORES - 
         ///     VALORES A PAGAR NO PERÍODO
         /// </summary>
-        public class RegistroM300 : RegistroBaseSped
+        public class RegistroM300 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classse <see cref="RegistroM300"/>
             /// </summary>
-            public RegistroM300()
+            public RegistroM300() : base("M300")
             {
-                Reg = "M300";
             }
 
             /// <summary>
@@ -792,14 +777,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M350: PIS/PASEP - FOLHA DE SALÁRIOS
         /// </summary>
-        public class RegistroM350 : RegistroBaseSped
+        public class RegistroM350 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classse <see cref="RegistroM350"/>
             /// </summary>
-            public RegistroM350()
+            public RegistroM350() : base("M350")
             {
-                Reg = "M350";
             }
 
             /// <summary>
@@ -837,14 +821,13 @@ namespace FiscalBr.EFDContribuicoes
         ///     REGISTRO M400: RECEITAS ISENTAS, NÃO ALCANÇADAS PELA INCIDÊNCIA DA
         ///     CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM SUSPENSÃO - PIS/PASEP
         /// </summary>
-        public class RegistroM400 : RegistroBaseSped
+        public class RegistroM400 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classse <see cref="RegistroM400"/>
             /// </summary>
-            public RegistroM400()
+            public RegistroM400() : base("M400")
             {
-                Reg = "M400";
             }
 
             /// <summary>
@@ -881,14 +864,13 @@ namespace FiscalBr.EFDContribuicoes
         ///     INCIDÊNCIA DA CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM
         ///     SUSPENSÃO – PIS/PASEP 
         /// </summary>
-        public class RegistroM410 : RegistroBaseSped
+        public class RegistroM410 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM410"/>
             /// </summary>
-            public RegistroM410()
+            public RegistroM410() : base("M410")
             {
-                Reg = "M410";
             }
 
             /// <summary>
@@ -944,14 +926,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M500: CRÉDITO DE COFINS RELATIVO AO PERIODO
         /// </summary>
-        public class RegistroM500 : RegistroBaseSped
+        public class RegistroM500 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM500"/>
             /// </summary>
-            public RegistroM500()
+            public RegistroM500() : base("M500")
             {
-                Reg = "M500";
             }
 
             /// <summary>
@@ -1053,14 +1034,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M505: DETALHAMENTO DA BASE DE CALCULO DO CRÉDITO APURADO NO PERÍODO – COFINS
         /// </summary>
-        public class RegistroM505 : RegistroBaseSped
+        public class RegistroM505 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM505"/>.
             /// </summary>
-            public RegistroM505()
+            public RegistroM505() : base("M505")
             {
-                Reg = "M505";
             }
 
             /// <summary>
@@ -1142,14 +1122,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M510: AJUSTES DO CRÉDITO DE COFINS APURADO
         /// </summary>
-        public class RegistroM510 : RegistroBaseSped
+        public class RegistroM510 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM510" />.
             /// </summary>
-            public RegistroM510()
+            public RegistroM510() : base("M510")
             {
-                Reg = "M510";
             }
 
             /// <summary>
@@ -1196,14 +1175,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M515: DETALHAMENTO DOS AJUSTES DO CRÉDITO DE COFINS APURADO
         /// </summary>
-        public class RegistroM515 : RegistroBaseSped
+        public class RegistroM515 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM515" />.
             /// </summary>
-            public RegistroM515()
+            public RegistroM515() : base("M515")
             {
-                Reg = "M515";
             }
 
             /// <summary>
@@ -1261,11 +1239,10 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M600: CONSOLIDAÇÃO DA CONTRIBUIÇÃO PARA A SEGURIDADE SOCIAL - COFINS DO PERIODO
         /// </summary>
-        public class RegistroM600 : RegistroBaseSped
+        public class RegistroM600 : RegistroSped
         {
-            public RegistroM600()
+            public RegistroM600() : base("M600")
             {
-                Reg = "M600";
             }
 
             [SpedCampos(2, "VL_TOT_CONT_NC_PER", "N", 0, 2, true, 2)]
@@ -1308,11 +1285,10 @@ namespace FiscalBr.EFDContribuicoes
             public List<RegistroM610> RegM610s { get; set; }
         }
 
-        public class RegistroM605 : RegistroBaseSped
+        public class RegistroM605 : RegistroSped
         {
-            public RegistroM605()
+            public RegistroM605() : base("M605")
             {
-                Reg = "M605";
             }
 
             [SpedCampos(2, "NUM_CAMPO", "C", 2, 0, true, 2)]
@@ -1325,11 +1301,10 @@ namespace FiscalBr.EFDContribuicoes
             public decimal VlDebito { get; set; }
         }
 
-        public class RegistroM610 : RegistroBaseSped
+        public class RegistroM610 : RegistroSped
         {
-            public RegistroM610()
+            public RegistroM610() : base("M610")
             {
-                Reg = "M610";
             }
 
             [SpedCampos(2, "COD_CONT", "C", 2, 0, true, 2)]
@@ -1341,32 +1316,61 @@ namespace FiscalBr.EFDContribuicoes
             [SpedCampos(4, "VL_BC_CONT", "N", 0, 2, true, 2)]
             public decimal VlBcCont { get; set; }
 
-            [SpedCampos(5, "ALIQ_COFINS", "N", 8, 4, false, 2)]
+            [SpedCampos(5, "VL_AJUS_ACRES_BC_COFINS", "N", 0, 2, true, 2)]
+            public decimal VlAjusAcresBcCofins { get; set; }
+
+            [SpedCampos(6, "VL_AJUS_REDUC_BC_COFINS", "N", 0, 2, true, 2)]
+            public decimal VlAjusReducBcCofins { get; set; }
+
+            [SpedCampos(7, "VL_BC_CONT_AJUS", "N", 0, 2, true, 2)]
+            public decimal VlBcContAjus
+            {
+                get
+                {
+                    return
+                        VlBcCont +
+                        VlAjusAcresBcCofins -
+                        VlAjusReducBcCofins;
+                }
+            }
+
+            [SpedCampos(8, "ALIQ_COFINS", "N", 8, 4, false, 2)]
             public decimal? AliqCofins { get; set; }
 
-            [SpedCampos(6, "QUANT_BC_COFINS", "N", 0, 3, false, 2)]
+            [SpedCampos(9, "QUANT_BC_COFINS", "N", 0, 3, false, 2)]
             public decimal? QuantBcCofins { get; set; }
 
-            [SpedCampos(7, "ALIQ_COFINS_QUANT", "N", 0, 4, false, 2)]
+            [SpedCampos(10, "ALIQ_COFINS_QUANT", "N", 0, 4, false, 2)]
             public decimal? AliqCofinsQuant { get; set; }
 
-            [SpedCampos(8, "VL_CONT_APUR", "N", 0, 2, true, 2)]
+            [SpedCampos(11, "VL_CONT_APUR", "N", 0, 2, true, 2)]
             public decimal VlContApur { get; set; }
 
-            [SpedCampos(9, "VL_AJUS_ACRES", "N", 0, 2, true, 2)]
+            [SpedCampos(12, "VL_AJUS_ACRES", "N", 0, 2, true, 2)]
             public decimal VlAjusAcres { get; set; }
 
-            [SpedCampos(10, "VL_AJUS_REDUC", "N", 0, 2, true, 2)]
+            [SpedCampos(13, "VL_AJUS_REDUC", "N", 0, 2, true, 2)]
             public decimal VlAjusReduc { get; set; }
 
-            [SpedCampos(11, "VL_CONT_DIFER", "N", 0, 2, false, 2)]
+            [SpedCampos(14, "VL_CONT_DIFER", "N", 0, 2, false, 2)]
             public decimal? VlContDifer { get; set; }
 
-            [SpedCampos(12, "VL_CONT_DIFER_ANT", "N", 0, 2, false, 2)]
+            [SpedCampos(15, "VL_CONT_DIFER_ANT", "N", 0, 2, false, 2)]
             public decimal? VlContDiferAnt { get; set; }
 
-            [SpedCampos(13, "VL_CONT_PER", "N", 0, 2, true, 2)]
-            public decimal VlContPer { get; set; }
+            [SpedCampos(16, "VL_CONT_PER", "N", 0, 2, true, 2)]
+            public decimal VlContPer
+            {
+                get
+                {
+                    return
+                        VlContApur +
+                        VlAjusAcres -
+                        VlAjusReduc -
+                        VlContDifer.GetValueOrDefault() +
+                        VlContDiferAnt.GetValueOrDefault();
+                }
+            }
 
             public RegistroM611 RegM611 { get; set; }
             public List<RegistroM615> RegM615s { get; set; }
@@ -1377,14 +1381,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M611: Sociedades Cooperativas –Composição da Base de Calculo –Cofins
         /// </summary>
-        public class RegistroM611 : RegistroBaseSped
+        public class RegistroM611 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma instância da classe <see cref="RegistroM611"/>
             /// </summary>
-            public RegistroM611()
+            public RegistroM611() : base("M611")
             {
-                Reg = "M611";
             }
 
             /// <summary>
@@ -1429,14 +1432,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M615: Ajustes da Base de Cálculo da COFINS Apurada 
         /// </summary>
-        public class RegistroM615 : RegistroBaseSped
+        public class RegistroM615 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma instância da classe <see cref="RegistroM615"/>
             /// </summary>
-            public RegistroM615()
+            public RegistroM615() : base("M615")
             {
-                Reg = "M615";
             }
 
             /// <summary>
@@ -1497,11 +1499,10 @@ namespace FiscalBr.EFDContribuicoes
 
         }
 
-        public class RegistroM620 : RegistroBaseSped
+        public class RegistroM620 : RegistroSped
         {
-            public RegistroM620()
+            public RegistroM620() : base("M620")
             {
-                Reg = "M620";
             }
 
             [SpedCampos(2, "IND_AJ", "C", 1, 0, true, 2)]
@@ -1527,11 +1528,10 @@ namespace FiscalBr.EFDContribuicoes
         }
 
         [SpedRegistros("01/10/2015", null)]
-        public class RegistroM625 : RegistroBaseSped
+        public class RegistroM625 : RegistroSped
         {
-            public RegistroM625()
+            public RegistroM625() : base("M625")
             {
-                Reg = "M625";
             }
 
             [SpedCampos(2, "DET_VALOR_AJ", "N", 0, 2, true, 2)]
@@ -1562,14 +1562,13 @@ namespace FiscalBr.EFDContribuicoes
         /// <summary>
         ///     REGISTRO M630: Informações Adicionais de Diferimento
         /// </summary>
-        public class RegistroM630 : RegistroBaseSped
+        public class RegistroM630 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma instância da classe <see cref="RegistroM630"/>
             /// </summary>
-            public RegistroM630()
+            public RegistroM630() : base("M630")
             {
-                Reg = "M630";
             }
 
             /// <summary>
@@ -1614,14 +1613,13 @@ namespace FiscalBr.EFDContribuicoes
         ///     REGISTRO M700: CONTRIBUIÇÃO DE PIS/PASEP DIFERIDA EM PREIODOS ANTERIORES - 
         ///     VALORES A PAGAR NO PERÍODO
         /// </summary>
-        public class RegistroM700 : RegistroBaseSped
+        public class RegistroM700 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classse <see cref="RegistroM700"/>
             /// </summary>
-            public RegistroM700()
+            public RegistroM700() : base("M700")
             {
-                Reg = "M700";
             }
 
             /// <summary>
@@ -1676,14 +1674,13 @@ namespace FiscalBr.EFDContribuicoes
         ///     REGISTRO M800: RECEITAS ISENTAS, NÃO ALCANÇADAS PELA INCIDÊNCIA DA 
         ///     CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM SUSPENSÃO – COFINS 
         /// </summary>
-        public class RegistroM800 : RegistroBaseSped
+        public class RegistroM800 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classse <see cref="RegistroM800"/>
             /// </summary>
-            public RegistroM800()
+            public RegistroM800() : base("M800")
             {
-                Reg = "M800";
             }
 
             /// <summary>
@@ -1720,14 +1717,13 @@ namespace FiscalBr.EFDContribuicoes
         ///     INCIDÊNCIA DA CONTRIBUIÇÃO, SUJEITAS A ALÍQUOTA ZERO OU DE VENDAS COM
         ///     SUSPENSÃO – cofins
         /// </summary>
-        public class RegistroM810 : RegistroBaseSped
+        public class RegistroM810 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="RegistroM810"/>
             /// </summary>
-            public RegistroM810()
+            public RegistroM810() : base("M810")
             {
-                Reg = "M810";
             }
 
             /// <summary>
@@ -1780,11 +1776,10 @@ namespace FiscalBr.EFDContribuicoes
             public string DescCompl { get; set; }
         }
 
-        public class RegistroM990 : RegistroBaseSped
+        public class RegistroM990 : RegistroSped
         {
-            public RegistroM990()
+            public RegistroM990() : base("M990")
             {
-                Reg = "M990";
             }
 
             [SpedCampos(2, "QTD_LIN_M", "N", int.MaxValue, 0, true, 2)]

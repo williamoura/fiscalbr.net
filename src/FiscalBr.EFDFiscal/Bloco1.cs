@@ -1,5 +1,6 @@
 ﻿using FiscalBr.Common;
 using FiscalBr.Common.Sped;
+using FiscalBr.Common.Sped.Interfaces;
 using System;
 using System.Collections.Generic;
 
@@ -8,7 +9,7 @@ namespace FiscalBr.EFDFiscal
     /// <summary>
     ///     BLOCO 1: OUTRAS INFORMAÇÕES
     /// </summary>
-    public class Bloco1
+    public class Bloco1 : IBlocoSped
     {
         public Registro1001 Reg1001 { get; set; }
         public Registro1990 Reg1990 { get; set; }
@@ -16,14 +17,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1001: ABERTURA DO BLOCO 1
         /// </summary>
-        public class Registro1001 : RegistroBaseSped
+        public class Registro1001 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1001" />.
             /// </summary>
-            public Registro1001()
+            public Registro1001() : base("1001")
             {
-                Reg = "1001";
             }
 
             /// <summary>
@@ -59,14 +59,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1010: OBRIGATORIEDADE DE REGISTROS DO BLOCO 1
         /// </summary>
-        public class Registro1010 : RegistroBaseSped
+        public class Registro1010 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1010" />.
             /// </summary>
-            public Registro1010()
+            public Registro1010() : base("1010")
             {
-                Reg = "1010";
             }
 
             /// <summary>
@@ -110,7 +109,7 @@ namespace FiscalBr.EFDFiscal
             public SimOuNao IndEe { get; set; }
 
             /// <summary>
-            ///     Reg 1601 - Realizou vendas com Cartão de Crédito ou de débito: S - Sim; N - Não
+            ///     Reg 1600 - Realizou vendas com Cartão de Crédito ou de débito: S - Sim; N - Não
             /// </summary>
             [SpedCampos(8, "IND_CART", "LE", 1, 0, true, 6)]
             public SimOuNao IndCart { get; set; }
@@ -156,14 +155,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1100: REGISTRO DE INFORMAÇÕES SOBRE EXPORTAÇÃO
         /// </summary>
-        public class Registro1100 : RegistroBaseSped
+        public class Registro1100 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1100" />.
             /// </summary>
-            public Registro1100()
+            public Registro1100() : base("1100")
             {
-                Reg = "1100";
             }
 
             /// <summary>
@@ -238,14 +236,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1105: DOCUMENTOS FISCAIS DE EXPORTAÇÃO
         /// </summary>
-        public class Registro1105 : RegistroBaseSped
+        public class Registro1105 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1105" />.
             /// </summary>
-            public Registro1105()
+            public Registro1105() : base("1105")
             {
-                Reg = "1105";
             }
 
             /// <summary>
@@ -290,14 +287,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1110: OPERAÇÕES DE EXPORTAÇÃO INDIRETA - MERCADORIAS DE TERCEIROS
         /// </summary>
-        public class Registro1110 : RegistroBaseSped
+        public class Registro1110 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1110" />.
             /// </summary>
-            public Registro1110()
+            public Registro1110() : base("1110")
             {
-                Reg = "1110";
             }
 
             /// <summary>
@@ -358,14 +354,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1200: CONTROLE DE CRÉDITOS FISCAIS - ICMS
         /// </summary>
-        public class Registro1200 : RegistroBaseSped
+        public class Registro1200 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1200" />.
             /// </summary>
-            public Registro1200()
+            public Registro1200() : base("1200")
             {
-                Reg = "1200";
             }
 
             /// <summary>
@@ -410,14 +405,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1210: UTILIZAÇÃO DE CRÉDITOS FISCAIS - ICMS
         /// </summary>
-        public class Registro1210 : RegistroBaseSped
+        public class Registro1210 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1210" />.
             /// </summary>
-            public Registro1210()
+            public Registro1210() : base("1210")
             {
-                Reg = "1210";
             }
 
             /// <summary>
@@ -448,14 +442,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1250: INFORMAÇÕES CONSOLIDADAS DE SALDOS DE RESTITUIÇÃO, RESSARCIMENTO E COMPLEMENTAÇÃO DO ICMS
         /// </summary>
-        public class Registro1250 : RegistroBaseSped
+        public class Registro1250 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1250" />.
             /// </summary>
-            public Registro1250()
+            public Registro1250() : base("1250")
             {
-                Reg = "1250";
             }
 
             /// <summary>
@@ -494,14 +487,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1255: INFORMAÇÕES CONSOLIDADAS DE SALDOS DE RESTITUIÇÃO,RESSARCIMENTO E COMPLEMENTAÇÃO DO ICMS POR MOTIVO 
         /// </summary>
-        public class Registro1255 : RegistroBaseSped
+        public class Registro1255 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1255" />.
             /// </summary>
-            public Registro1255()
+            public Registro1255() : base("1255")
             {
-                Reg = "1255";
             }
 
             /// <summary>
@@ -544,14 +536,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1300: MOVIMENTAÇÃO DIÁRIA DE COMBUSTÍVEIS
         /// </summary>
-        public class Registro1300 : RegistroBaseSped
+        public class Registro1300 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1300" />.
             /// </summary>
-            public Registro1300()
+            public Registro1300() : base("1300")
             {
-                Reg = "1300";
             }
 
             /// <summary>
@@ -620,14 +611,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1310: MOVIMENTAÇÃO DIÁRIA DE COMBUSTÍVEIS POR TANQUE
         /// </summary>
-        public class Registro1310 : RegistroBaseSped
+        public class Registro1310 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1310" />.
             /// </summary>
-            public Registro1310()
+            public Registro1310() : base("1310")
             {
-                Reg = "1310";
             }
 
             /// <summary>
@@ -690,26 +680,25 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1320: VOLUME DE VENDAS
         /// </summary>
-        public class Registro1320 : RegistroBaseSped
+        public class Registro1320 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1320" />.
             /// </summary>
-            public Registro1320()
+            public Registro1320() : base("1320")
             {
-                Reg = "1320";
             }
 
             /// <summary>
             ///     Bico ligado à bomba
             /// </summary>
-            [SpedCampos(2, "NUM_BICO", "N", 0, 0, true, 2)]
+            [SpedCampos(2, "NUM_BICO", "N", int.MaxValue, 0, true, 2)]
             public long NumBico { get; set; }
 
             /// <summary>
             ///     Número da intervenção
             /// </summary>
-            [SpedCampos(3, "NR_INTERV", "N", 0, 0, false, 2)]
+            [SpedCampos(3, "NR_INTERV", "N", int.MaxValue, 0, false, 2)]
             public long? NrInterv { get; set; }
 
             /// <summary>
@@ -739,39 +728,38 @@ namespace FiscalBr.EFDFiscal
             /// <summary>
             ///     Valor da leitura final do contador, no fechamento do bico
             /// </summary>
-            [SpedCampos(8, "VAL_FECHA", "N", 0, 3, true, 2)]
+            [SpedCampos(8, "VAL_FECHA", "N", int.MaxValue, 3, true, 2)]
             public decimal ValFecha { get; set; }
 
             /// <summary>
             ///     Valor da leitura inicial do contador, na abertura do bico
             /// </summary>
-            [SpedCampos(9, "VAL_ABERT", "N", 0, 3, true, 2)]
+            [SpedCampos(9, "VAL_ABERT", "N", int.MaxValue, 3, true, 2)]
             public decimal ValAbert { get; set; }
 
             /// <summary>
             ///     Aferições da bomba (em litros)
             /// </summary>
-            [SpedCampos(10, "VOL_AFERI", "N", 0, 3, false, 2)]
+            [SpedCampos(10, "VOL_AFERI", "N", int.MaxValue, 3, false, 2)]
             public decimal VolAferi { get; set; }
 
             /// <summary>
             ///     Vendas do bico (em litros)
             /// </summary>
-            [SpedCampos(11, "VOL_VENDAS", "N", 0, 3, true, 2)]
+            [SpedCampos(11, "VOL_VENDAS", "N", int.MaxValue, 3, true, 2)]
             public decimal VolVendas { get; set; }
         }
 
         /// <summary>
         ///     REGISTRO 1350: BOMBAS
         /// </summary>
-        public class Registro1350 : RegistroBaseSped
+        public class Registro1350 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1350" />.
             /// </summary>
-            public Registro1350()
+            public Registro1350() : base("1350")
             {
-                Reg = "1350";
             }
 
             /// <summary>
@@ -805,14 +793,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1360: LACRES DA BOMBA
         /// </summary>
-        public class Registro1360 : RegistroBaseSped
+        public class Registro1360 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1360" />.
             /// </summary>
-            public Registro1360()
+            public Registro1360() : base("1360")
             {
-                Reg = "1360";
             }
 
             /// <summary>
@@ -831,14 +818,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1370: BICOS DA BOMBA
         /// </summary>
-        public class Registro1370 : RegistroBaseSped
+        public class Registro1370 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1370" />.
             /// </summary>
-            public Registro1370()
+            public Registro1370() : base("1370")
             {
-                Reg = "1370";
             }
 
             /// <summary>
@@ -863,14 +849,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1390: CONTROLE DE PRODUÇÃO DE USINA
         /// </summary>
-        public class Registro1390 : RegistroBaseSped
+        public class Registro1390 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1390" />.
             /// </summary>
-            public Registro1390()
+            public Registro1390() : base("1390")
             {
-                Reg = "1390";
             }
 
             /// <summary>
@@ -885,14 +870,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1391: PRODUÇÃO DIÁRIA DA USINA
         /// </summary>
-        public class Registro1391 : RegistroBaseSped
+        public class Registro1391 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1391" />.
             /// </summary>
-            public Registro1391()
+            public Registro1391() : base("1391")
             {
-                Reg = "1391";
             }
 
             /// <summary>
@@ -904,91 +888,91 @@ namespace FiscalBr.EFDFiscal
             /// <summary>
             ///     Quantidade de cana esmagada (toneladas)
             /// </summary>
-            [SpedCampos(3, "QTD_MOID", "N", 0, 2, false, 6)]
-            public double? QtdMoid { get; set; }
+            [SpedCampos(3, "QTD_MOID", "N", int.MaxValue, 2, false, 6)]
+            public decimal? QtdMoid { get; set; }
 
             /// <summary>
             ///     Estoque inicial (litros / Kg)
             /// </summary>
-            [SpedCampos(4, "ESTQ_INI", "N", 0, 2, true, 6)]
-            public double EstqIni { get; set; }
+            [SpedCampos(4, "ESTQ_INI", "N", int.MaxValue, 2, true, 6)]
+            public decimal EstqIni { get; set; }
 
             /// <summary>
             ///     Quantidade produziada (litros / Kg)
             /// </summary>
-            [SpedCampos(5, "QTD_PRODUZ", "N", 0, 2, false, 6)]
-            public double? QtdProduz { get; set; }
+            [SpedCampos(5, "QTD_PRODUZ", "N", int.MaxValue, 2, false, 6)]
+            public decimal? QtdProduz { get; set; }
 
             /// <summary>
             ///     Entrada de álcool anidro/hidratado decorrente da transformação do álcool hidratado/anidro
             /// </summary>
-            [SpedCampos(6, "ENT_ANID_HID", "N", 0, 2, false, 6)]
-            public double? EntAnidHid { get; set; }
+            [SpedCampos(6, "ENT_ANID_HID", "N", int.MaxValue, 2, false, 6)]
+            public decimal? EntAnidHid { get; set; }
 
             /// <summary>
             ///     Outras entradas (litros / Kg)
             /// </summary>
-            [SpedCampos(7, "OUTR_ENTR", "N", 0, 2, false, 6)]
-            public double? OutrEntr { get; set; }
+            [SpedCampos(7, "OUTR_ENTR", "N", int.MaxValue, 2, false, 6)]
+            public decimal? OutrEntr { get; set; }
 
             /// <summary>
             ///     Evaporação (litros) ou quebra de peso (Kg)
             /// </summary>
-            [SpedCampos(8, "PERDA", "N", 0, 2, false, 6)]
-            public double? Perda { get; set; }
+            [SpedCampos(8, "PERDA", "N", int.MaxValue, 2, false, 6)]
+            public decimal? Perda { get; set; }
 
             /// <summary>
             ///     Consumo (litros)
             /// </summary>
-            [SpedCampos(9, "CONS", "N", 0, 2, false, 6)]
-            public double? Cons { get; set; }
+            [SpedCampos(9, "CONS", "N", int.MaxValue, 2, false, 6)]
+            public decimal? Cons { get; set; }
 
             /// <summary>
             ///     Saída para transformação (litros)
             /// </summary>
-            [SpedCampos(10, "SAI_ANI_HID", "N", 0, 2, false, 6)]
-            public double? SaiAniHid { get; set; }
+            [SpedCampos(10, "SAI_ANI_HID", "N", int.MaxValue, 2, false, 6)]
+            public decimal? SaiAniHid { get; set; }
 
             /// <summary>
             ///     Saídas (litros / Kg)
             /// </summary>
-            [SpedCampos(11, "SAIDAS", "N", 0, 2, false, 6)]
-            public double? Saidas { get; set; }
+            [SpedCampos(11, "SAIDAS", "N", int.MaxValue, 2, false, 6)]
+            public decimal? Saidas { get; set; }
 
             /// <summary>
             ///     Estoque final (litros / Kg)
             /// </summary>
-            [SpedCampos(12, "ESTQ_FIN", "N", 0, 2, true, 6)]
-            public double EstqFin { get; set; }
+            [SpedCampos(12, "ESTQ_FIN", "N", int.MaxValue, 2, true, 6)]
+            public decimal EstqFin { get; set; }
 
             /// <summary>
             ///     Estoque inicial de mel residual (Kg)
             /// </summary>
-            [SpedCampos(13, "ESTQ_INI_MEL", "N", 0, 2, false, 6)]
-            public double? EstqIniMel { get; set; }
+            [SpedCampos(13, "ESTQ_INI_MEL", "N", int.MaxValue, 2, false, 6)]
+            public decimal? EstqIniMel { get; set; }
 
             /// <summary>
             ///     Produção de mel residual (Kg) e entradas de mel (Kg)
             /// </summary>
-            [SpedCampos(14, "PROD_DIA_MEL", "N", 0, 2, false, 6)]
-            public double? ProdDiaMel { get; set; }
+            [SpedCampos(14, "PROD_DIA_MEL", "N", int.MaxValue, 2, false, 6)]
+            public decimal? ProdDiaMel { get; set; }
 
             /// <summary>
             ///     Mel residual utilizado (Kg) e saídas de mel (Kg)
             /// </summary>
-            [SpedCampos(15, "UTIL_MEL", "N", 0, 2, false, 6)]
-            public double? UtilMel { get; set; }
+            [SpedCampos(15, "UTIL_MEL", "N", int.MaxValue, 2, false, 6)]
+            public decimal? UtilMel { get; set; }
 
             /// <summary>
             ///     Produção de álcool (litros) ou açúcar (Kg) proveniente do mel residual
             /// </summary>
-            [SpedCampos(16, "PROD_ALC_MEL", "N", 0, 2, false, 6)]
-            public double? ProdAlcMel { get; set; }
+            [SpedCampos(16, "PROD_ALC_MEL", "N", int.MaxValue, 2, false, 6)]
+            public decimal? ProdAlcMel { get; set; }
 
             /// <summary>
             ///     Observações
             /// </summary>
-            [SpedCampos(17, "OBS", "C", 0, 0, false, 6)]
+            [SpedCampos(17, "OBS", "C", int.MaxValue, 0, false, 6)]
             public string Obs { get; set; }
 
             /// <summary>
@@ -1011,21 +995,20 @@ namespace FiscalBr.EFDFiscal
             /// <summary>
             ///     Quantidade de resíduo produzido (toneladas)
             /// </summary>
-            [SpedCampos(19, "QTD_RESIDUO", "N", 0, 2, true, 6)]
+            [SpedCampos(19, "QTD_RESIDUO", "N", int.MaxValue, 2, true, 6)]
             public decimal QtdResiduo { get; set; }
         }
 
         /// <summary>
         ///     REGISTRO 1400: INFORMAÇÃO SOBRE VALORES AGREGADOS
         /// </summary>
-        public class Registro1400 : RegistroBaseSped
+        public class Registro1400 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1400" />.
             /// </summary>
-            public Registro1400()
+            public Registro1400() : base("1400")
             {
-                Reg = "1400";
             }
 
             /// <summary>
@@ -1050,14 +1033,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1500: NOTA FISCAL/CONTA DE ENERGIA ELETRÉTRICA - OPERAÇÕES INTERESTADUAIS
         /// </summary>
-        public class Registro1500 : RegistroBaseSped
+        public class Registro1500 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1500" />.
             /// </summary>
-            public Registro1500()
+            public Registro1500() : base("1500")
             {
-                Reg = "1500";
             }
 
             /// <summary>
@@ -1258,14 +1240,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1510: ITENS DO DOCUMENTO NOTA FISCAL/CONTA ENERGIA ELÉTRICA
         /// </summary>
-        public class Registro1510 : RegistroBaseSped
+        public class Registro1510 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1510" />.
             /// </summary>
-            public Registro1510()
+            public Registro1510() : base("1510")
             {
-                Reg = "1510";
             }
 
             /// <summary>
@@ -1394,16 +1375,16 @@ namespace FiscalBr.EFDFiscal
         }
 
         /// <summary>
-        ///     REGISTRO 1600: TOTAL DAS OPERAÇÕES COM CARTÃO DE CRÉDITO E/OU DÉBITO
+        ///     REGISTRO 1600: TOTAL DAS OPERAÇÕES COM CARTÃO DE CRÉDITO E/OU DÉBITO, LOJA(PRIVATE LABEL) E DEMAIS INSTRUMENTOS DE PAGAMENTOS ELETRÔNICOS (VÁLIDO ATÉ 31/12/2021)
         /// </summary>
-        public class Registro1600 : RegistroBaseSped
+        [SpedRegistros("22/01/2007", "31/12/2021")]
+        public class Registro1600 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1600" />.
             /// </summary>
-            public Registro1600()
+            public Registro1600() : base("1600")
             {
-                Reg = "1600";
             }
 
             /// <summary>
@@ -1415,71 +1396,70 @@ namespace FiscalBr.EFDFiscal
             /// <summary>
             ///     Valor total das operações realizadas no período referente a Cartão de Crédito
             /// </summary>
-            [SpedCampos(3, "TOT_CREDITO", "N", 0, 2, true, 2)]
+            [SpedCampos(3, "TOT_CREDITO", "N", 15, 2, true, 2)]
             public decimal TotCredito { get; set; }
 
             /// <summary>
             ///     Valor total das operações realizadas no período referente a Cartão de Débito
             /// </summary>
-            [SpedCampos(4, "TOT_DEBITO", "N", 0, 2, true, 2)]
+            [SpedCampos(4, "TOT_DEBITO", "N", 15, 2, true, 2)]
             public decimal TotDebito { get; set; }
         }
 
         /// <summary>
-        ///     REGISTRO 1601: Operações com instrumentos de pagamentos eletrônicos 
+        ///     REGISTRO 1601: OPERAÇÕES COM INSTRUMENTOS DE PAGAMENTOS ELETRÔNICOS(VÁLIDO A PARTIR DE 01/01/2022)
         /// </summary>
-        public class Registro1601 : RegistroBaseSped
+        [SpedRegistros("01/01/2022", "")]
+        public class Registro1601 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1601" />.
             /// </summary>
-            public Registro1601()
+            public Registro1601() : base("1601")
             {
-                Reg = "1601";
             }
 
             /// <summary>
-            ///     Código do participante (campo 02 do Registro 0150): identificação da instituição que efetuou o pagamento
+            ///     Identificação da instituição que efetuou o pagamento
             /// </summary>
-            [SpedCampos(2, "COD_PART_IP", "C", 60, 0, true, 2)]
+            [SpedCampos(2, "COD_PART_IP", "C", 60, 0, true, 16)]
             public string CodPartIp { get; set; }
 
             /// <summary>
-            ///     Código do participante (campo 02 do Registro 0150): identificação do intermediador da transação
+            ///     Identificação do intermediador da transação
             /// </summary>
-            [SpedCampos(3, "COD_PART_IT", "C", 60, 0, true, 2)]
-            public decimal TotCreditoIt { get; set; }
+            [SpedCampos(3, "COD_PART_IT", "C", 60, 0, false, 16)]
+            public string CodPartIt { get; set; }
 
             /// <summary>
-            ///     Valor total bruto das vendas e/ou prestações de serviços no campo de incidência do ICMS, incluindo operações com imunidade do imposto.
+            ///     Valor total bruto das vendas e/ou prestações de serviços no campo de incidência do ICMS, incluindo operações com imunidade do imposto
             /// </summary>
-            [SpedCampos(4, "TOT_VS", "N", 0, 2, true, 2)]
-            public decimal TotVendas { get; set; }
+            [SpedCampos(4, "TOT_VS", "N", 15, 2, true, 16)]
+            public decimal TotVs { get; set; }
 
             /// <summary>
             ///     Valor total bruto das prestações de serviços no campo de incidência do ISS
             /// </summary>
-            [SpedCampos(5, "TOT_ISS", "N", 0, 2, true, 2)]
-            public decimal TotISS { get; set; }
+            [SpedCampos(5, "TOT_ISS", "N", 15, 2, true, 16)]
+            public decimal TotIss { get; set; }
 
             /// <summary>
-            ///     Valor total de operações deduzido dos valores dos campos TOT_VS e TOT_ISS.
+            ///     Valor total de operações deduzido dos valores dos campos TOT_VS e TOT_ISS
             /// </summary>
-            [SpedCampos(6, "TOT_OUTROS", "N", 0, 2, true, 2)]
+            [SpedCampos(6, "TOT_OUTROS", "N", 15, 2, true, 16)]
             public decimal TotOutros { get; set; }
         }
 
         /// <summary>
         ///     REGISTRO 1700: DOCUMENTOS FISCAIS UTILIZADOS
         /// </summary>
-        public class Registro1700 : RegistroBaseSped
+        public class Registro1700 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1700" />.
             /// </summary>
-            public Registro1700()
+            public Registro1700() : base("1700")
             {
-                Reg = "1700";
             }
 
             /// <summary>
@@ -1538,14 +1518,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1710: DOCUMENTOS FISCAIS CANCELADOS/INUTILIZADOS
         /// </summary>
-        public class Registro1710 : RegistroBaseSped
+        public class Registro1710 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1710" />.
             /// </summary>
-            public Registro1710()
+            public Registro1710() : base("1710")
             {
-                Reg = "1710";
             }
 
             /// <summary>
@@ -1564,14 +1543,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1800: DCTA - DEMONSTRATIVO DE CRÉDITO DO IMCS SOBRE TRANSPORTE AÉREO
         /// </summary>
-        public class Registro1800 : RegistroBaseSped
+        public class Registro1800 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1800" />.
             /// </summary>
-            public Registro1800()
+            public Registro1800() : base("1800")
             {
-                Reg = "1800";
             }
 
             /// <summary>
@@ -1632,14 +1610,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1900: INDICADOR DE SUB-APURAÇÃO DO ICMS
         /// </summary>
-        public class Registro1900 : RegistroBaseSped
+        public class Registro1900 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1900" />.
             /// </summary>
-            public Registro1900()
+            public Registro1900() : base("1900")
             {
-                Reg = "1900";
             }
 
             /// <summary>
@@ -1668,14 +1645,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1910: PERÍODO DA SUB-APURAÇÃO DO ICMS
         /// </summary>
-        public class Registro1910 : RegistroBaseSped
+        public class Registro1910 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1910" />.
             /// </summary>
-            public Registro1910()
+            public Registro1910() : base("1910")
             {
-                Reg = "1910";
             }
 
             /// <summary>
@@ -1696,14 +1672,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1920: SUB-APURAÇÃO DO ICMS
         /// </summary>
-        public class Registro1920 : RegistroBaseSped
+        public class Registro1920 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1920" />.
             /// </summary>
-            public Registro1920()
+            public Registro1920() : base("1920")
             {
-                Reg = "1920";
             }
 
             /// <summary>
@@ -1786,14 +1761,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1921: AJUSTE/BENEFÍCIO/INCENTIVO DA SUB-APURAÇÃO DO ICMS
         /// </summary>
-        public class Registro1921 : RegistroBaseSped
+        public class Registro1921 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1921" />.
             /// </summary>
-            public Registro1921()
+            public Registro1921() : base("1921")
             {
-                Reg = "1921";
             }
 
             /// <summary>
@@ -1821,14 +1795,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1922: INFORMAÇÕES ADICIONAIS DOS AJUSTES DA SUB-APURAÇÃO DO ICMS
         /// </summary>
-        public class Registro1922 : RegistroBaseSped
+        public class Registro1922 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1922" />.
             /// </summary>
-            public Registro1922()
+            public Registro1922() : base("1922")
             {
-                Reg = "1922";
             }
 
             /// <summary>
@@ -1841,6 +1814,7 @@ namespace FiscalBr.EFDFiscal
             ///     Número do processo ao qual o ajuste está vinculado, se houver
             /// </summary>
             [SpedCampos(3, "NUM_PROC", "C", 15, 0, false, 4)]
+            [SpedCampos(3, "NUM_PROC", "C", 60, 0, false, 17)]
             public string NumProc { get; set; }
 
             /// <summary>
@@ -1871,14 +1845,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1923: INFORMAÇÕES ADICIONAIS DOS AJUSTES DA SUB-APURAÇÃO DO ICMS - IDENTIFICAÇÃO DOS DOCUMENTOS FISCAIS
         /// </summary>
-        public class Registro1923 : RegistroBaseSped
+        public class Registro1923 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1923" />.
             /// </summary>
-            public Registro1923()
+            public Registro1923() : base("1923")
             {
-                Reg = "1923";
             }
 
             /// <summary>
@@ -1937,14 +1910,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1925: INFORMAÇÕES ADICIONAIS DA SUB-APURAÇÃO - VALORES DECLARATÓRIOS
         /// </summary>
-        public class Registro1925 : RegistroBaseSped
+        public class Registro1925 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1925" />.
             /// </summary>
-            public Registro1925()
+            public Registro1925() : base("1925")
             {
-                Reg = "1925";
             }
 
             /// <summary>
@@ -1969,14 +1941,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1926: OBRIGAÇÕES DO ICMS A RECOLHER - OPERAÇÕES REFERENTES À SUB-APURAÇÃO
         /// </summary>
-        public class Registro1926 : RegistroBaseSped
+        public class Registro1926 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1926" />.
             /// </summary>
-            public Registro1926()
+            public Registro1926() : base("1926")
             {
-                Reg = "1926";
             }
 
             /// <summary>
@@ -2007,6 +1978,7 @@ namespace FiscalBr.EFDFiscal
             ///     Número do processo ou auto de infração ao qual a obrigação está vinculada, se houver
             /// </summary>
             [SpedCampos(6, "NUM_PROC", "C", 15, 0, false, 4)]
+            [SpedCampos(6, "NUM_PROC", "C", 60, 0, false, 17)]
             public string NumProc { get; set; }
 
             /// <summary>
@@ -2043,14 +2015,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1960: GIAF 1 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS E FINANCEIROS: INDÚSTRIA (CRÉDITO PRESUMIDO)
         /// </summary>
-        public class Registro1960 : RegistroBaseSped
+        public class Registro1960 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1960" />.
             /// </summary>
-            public Registro1960()
+            public Registro1960() : base("1960")
             {
-                Reg = "1960";
             }
 
             /// <summary>
@@ -2062,82 +2033,81 @@ namespace FiscalBr.EFDFiscal
             /// <summary>
             ///     Percentual de crédito presumido
             /// </summary>
-            [SpedCampos(3, "G1_01", "N", 0, 2, true, 2)]
-            public int G101 { get; set; }
+            [SpedCampos(3, "G1_01", "N", 15, 2, true, 2)]
+            public decimal G101 { get; set; }
 
             /// <summary>
             ///     Saídas não incentivadas de PI 
             /// </summary>
-            [SpedCampos(4, "G1_02", "N", 0, 2, true, 2)]
-            public int G102 { get; set; }
+            [SpedCampos(4, "G1_02", "N", 15, 2, true, 2)]
+            public decimal G102 { get; set; }
 
             /// <summary>
             ///     Saídas incentivadas de PI
             /// </summary>
-            [SpedCampos(5, "G1_03", "N", 0, 2, true, 2)]
-            public int G103 { get; set; }
+            [SpedCampos(5, "G1_03", "N", 15, 2, true, 2)]
+            public decimal G103 { get; set; }
 
             /// <summary>
             ///     Saídas incentivadas de PI para fora do Nordeste
             /// </summary>
-            [SpedCampos(6, "G1_04", "N", 0, 2, true, 2)]
-            public int G104 { get; set; }
+            [SpedCampos(6, "G1_04", "N", 15, 2, true, 2)]
+            public decimal G104 { get; set; }
 
             /// <summary>
             ///     Saldo devedor do ICMS antes das deduções do incentivo
             /// </summary>
-            [SpedCampos(7, "G1_05", "N", 0, 2, true, 2)]
-            public int G105 { get; set; }
+            [SpedCampos(7, "G1_05", "N", 15, 2, true, 2)]
+            public decimal G105 { get; set; }
 
             /// <summary>
             ///     Saldo devedor do ICMS relativo à faixa incentivada de PI 
             /// </summary>
-            [SpedCampos(8, "G1_06", "N", 0, 2, true, 2)]
-            public int G106 { get; set; }
+            [SpedCampos(8, "G1_06", "N", 15, 2, true, 2)]
+            public decimal G106 { get; set; }
 
             /// <summary>
             ///     Crédito presumido nas saídas incentivadas de PI para fora do Nordeste
             /// </summary>
-            [SpedCampos(9, "G1_07", "N", 0, 2, true, 2)]
-            public int G107 { get; set; }
+            [SpedCampos(9, "G1_07", "N", 15, 2, true, 2)]
+            public decimal G107 { get; set; }
 
             /// <summary>
             ///    Saldo devedor relativo à faixa incentivada de PI após o crédito presumido nas saídas para fora do Nordeste
             /// </summary>
-            [SpedCampos(10, "G1_08", "N", 0, 2, true, 2)]
-            public int G108 { get; set; }
+            [SpedCampos(10, "G1_08", "N", 15, 2, true, 2)]
+            public decimal G108 { get; set; }
 
             /// <summary>
             ///    Crédito presumido
             /// </summary>
-            [SpedCampos(11, "G1_09", "N", 0, 2, true, 2)]
-            public int G109 { get; set; }
+            [SpedCampos(11, "G1_09", "N", 15, 2, true, 2)]
+            public decimal G109 { get; set; }
 
             /// <summary>
             ///     Dedução de incentivo da Indústria (crédito presumido)
             /// </summary>
-            [SpedCampos(12, "G1_10", "N", 0, 2, true, 2)]
-            public int G110 { get; set; }
+            [SpedCampos(12, "G1_10", "N", 15, 2, true, 2)]
+            public decimal G110 { get; set; }
 
             /// <summary>
             ///     Saldo devedor do ICMS após deduções
             /// </summary>
-            [SpedCampos(13, "G1_11", "N", 0, 2, true, 2)]
-            public int G111 { get; set; }
+            [SpedCampos(13, "G1_11", "N", 15, 2, true, 2)]
+            public decimal G111 { get; set; }
 
         }
 
         /// <summary>
         ///     REGISTRO 1970: GIAF 3 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS E FINANCEIROS: IMPORTAÇÃO (DIFERIMENTO NA ENTRADA E CRÉDITO PRESUMIDO NA SAÍDA SUBSEQUENTE)
         /// </summary>
-        public class Registro1970 : RegistroBaseSped
+        public class Registro1970 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1970" />.
             /// </summary>
-            public Registro1970()
+            public Registro1970() : base("1970")
             {
-                Reg = "1970";
             }
 
             /// <summary>
@@ -2212,14 +2182,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1975: GIAF 3 - GUIA DE INFORMAÇÃO E APURAÇÃO DE INCENTIVOS FISCAIS  E  FINANCEIROS: IMPORTAÇÃO (SAÍDAS INTERNAS POR FAIXA  DE ALÍQUOTA)
         /// </summary>
-        public class Registro1975 : RegistroBaseSped
+        public class Registro1975 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1975" />.
             /// </summary>
-            public Registro1975()
+            public Registro1975() : base("1975")
             {
-                Reg = "1975";
             }
 
             /// <summary>
@@ -2250,14 +2219,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1980: GIAF 4 GUIA DE INFORMAÇÃO E APURAÇÃO DE  INCENTIVOS FISCAIS E FINANCEIROS: CENTRAL DE DISTRIBUIÇÃO (ENTRADAS/SAÍDAS)
         /// </summary>
-        public class Registro1980 : RegistroBaseSped
+        public class Registro1980 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1980" />.
             /// </summary>
-            public Registro1980()
+            public Registro1980() : base("1980")
             {
-                Reg = "1980";
             }
 
             /// <summary>
@@ -2343,14 +2311,13 @@ namespace FiscalBr.EFDFiscal
         /// <summary>
         ///     REGISTRO 1990: ENCERRAMENTO DO BLOCO 1
         /// </summary>
-        public class Registro1990 : RegistroBaseSped
+        public class Registro1990 : RegistroSped
         {
             /// <summary>
             ///     Inicializa uma nova instância da classe <see cref="Registro1990" />.
             /// </summary>
-            public Registro1990()
+            public Registro1990() : base("1990")
             {
-                Reg = "1990";
             }
 
             /// <summary>

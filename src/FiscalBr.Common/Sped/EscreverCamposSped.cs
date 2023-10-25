@@ -1,5 +1,7 @@
-﻿using System;
+﻿using FiscalBr.Common.Sped.Interfaces;
+using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -52,6 +54,8 @@ namespace FiscalBr.Common.Sped
             var isRequired = info.Item3;
             var fieldLength = info.Item4;
             var decimalPlaces = info.Item5;
+            var decimalPlacesStr = string.Empty.PadLeft(decimalPlaces, '0');
+            var cultura = CultureInfo.GetCultureInfo("pt-BR");
 
             var propertyLength = hasValue ? valorEscrever.Length : 0;
 
@@ -69,20 +73,27 @@ namespace FiscalBr.Common.Sped
 
             if (isRequired && isDecimal &&
                 (valorEscrever == string.Empty || valorEscrever.ToDecimal() == 0))
-                return Constantes.VZero.ToString("N" + decimalPlaces);
+                //return Constantes.VZero.ToString("N" + decimalPlaces);
+                return string.Format(cultura, $"{{0:0.{decimalPlacesStr}}}", Constantes.VZero);
             else
             {
                 if (isDecimal && hasValue)
                 {
+                    return string.Format(cultura, $"{{0:0.{decimalPlacesStr}}}", Convert.ToDecimal(valorEscrever));
+                    /*
                     var vDecimal =
                         Convert.ToDecimal(valorEscrever).ToString("N" + decimalPlaces);
                     return vDecimal.ToStringSafe().Replace(".", string.Empty);
+                    */
                 }
                 else if (isNullableDecimal && hasValue)
                 {
+                    return string.Format(cultura, $"{{0:0.{decimalPlacesStr}}}", Convert.ToDecimal(valorEscrever));
+                    /*
                     var vDecimal =
                         Convert.ToDecimal(valorEscrever).ToString("N" + decimalPlaces);
                     return vDecimal.ToStringSafe().Replace(".", string.Empty);
+                    */
                 }
                 else if (isNullableDateTime && hasValue)
                     return Convert.ToDateTime(valorEscrever).Date.ToString("ddMMyyyy");
@@ -168,19 +179,28 @@ namespace FiscalBr.Common.Sped
             return (SpedRegistrosAttribute)Attribute.GetCustomAttribute(tipo, typeof(SpedRegistrosAttribute));
         }
 
-        private static SpedCamposAttribute ObtemAtributoCampoAtual(Type tipo, int index = 0)
+        private static readonly Dictionary<string, SpedCamposAttribute[]> SpedCamposAttributeRepository = new Dictionary<string, SpedCamposAttribute[]>();
+
+        private static SpedCamposAttribute[] GetSpedCamposAttribute(PropertyInfo prop)
         {
-            return (SpedCamposAttribute)Attribute.GetCustomAttributes(tipo, typeof(SpedCamposAttribute))[index];
+            lock (SpedCamposAttributeRepository)
+            {
+                string propName = $"{prop.DeclaringType.FullName}.{prop.Name}";
+                if (!SpedCamposAttributeRepository.ContainsKey(propName))
+                    SpedCamposAttributeRepository.Add(propName, (SpedCamposAttribute[])Attribute.GetCustomAttributes(prop, typeof(SpedCamposAttribute)));
+
+                return SpedCamposAttributeRepository[propName];
+            }
         }
 
         private static SpedCamposAttribute ObtemAtributoPropriedadeAtual(PropertyInfo prop, int index = 0)
         {
-            return (SpedCamposAttribute)Attribute.GetCustomAttributes(prop, typeof(SpedCamposAttribute), true)[index];
+            return GetSpedCamposAttribute(prop)[index];
         }
 
         private static bool ExisteAtributoPropriedadeParaVersao(PropertyInfo prop, int versao)
         {
-            var attrs = (SpedCamposAttribute[])Attribute.GetCustomAttributes(prop, typeof(SpedCamposAttribute));
+            var attrs = GetSpedCamposAttribute(prop);
 
             return attrs.Any(a => a.Versao == versao);
         }
@@ -194,7 +214,7 @@ namespace FiscalBr.Common.Sped
 
         private static SpedCamposAttribute ObtemAtributoPropriedadeVersaoAtual(PropertyInfo prop, int versao)
         {
-            var attrs = (SpedCamposAttribute[])Attribute.GetCustomAttributes(prop, typeof(SpedCamposAttribute));
+            var attrs = GetSpedCamposAttribute(prop);
 
             return attrs.FirstOrDefault(f => f.Versao == versao);
         }
@@ -230,7 +250,7 @@ namespace FiscalBr.Common.Sped
 
         private static bool SomenteParaLeitura(System.Reflection.PropertyInfo property)
         {
-            if (property.PropertyType.BaseType.Equals(typeof(RegistroBaseSped))) return true;
+            if (property.PropertyType.BaseType.Equals(typeof(RegistroSped))) return true;
 
             if (property.PropertyType.IsGenericType &&
                 property.PropertyType.GetGenericTypeDefinition() == typeof(List<>)) return true;
@@ -273,7 +293,7 @@ namespace FiscalBr.Common.Sped
 
             var listaComPropriedadesOrdenadas = ObtemListaComPropriedadesOrdenadas(type);
 
-            var availableVersions = (CodigoVersaoLeiaute[])Enum.GetValues(typeof(CodigoVersaoLeiaute));
+            var availableVersions = (VersaoLeiauteSped[])Enum.GetValues(typeof(VersaoLeiauteSped));
             var lastVersion = availableVersions.LastOrDefault();
 
             var sb = new StringBuilder();
@@ -287,14 +307,14 @@ namespace FiscalBr.Common.Sped
 
                     int versaoEspecifica = lastVersion.ToDefaultValue().ToInt();
                     SpedCamposAttribute spedCampoAttr = null;
-                    var attrs = Attribute.GetCustomAttributes(property, typeof(SpedCamposAttribute));
+                    var attrs = GetSpedCamposAttribute(property);
 
                     switch (attrs.Length)
                     {
                         case 0:
                             break;
                         case 1:
-                            spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeAtual(property);
+                            spedCampoAttr = ObtemAtributoPropriedadeAtual(property);
                             break;
                         default:
                             while (!ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
@@ -305,7 +325,7 @@ namespace FiscalBr.Common.Sped
                                     break;
                             }
 
-                            spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
+                            spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                             break;
                     }
 
@@ -313,7 +333,7 @@ namespace FiscalBr.Common.Sped
                         throw new Exception(string.Format(
                             "O campo {0} no registro {1} não possui atributo SPED definido!", property.Name, registroAtual));
 
-                    var propertyValue = RegistroBaseSped.GetPropValue(source, property.Name);
+                    var propertyValue = RegistroSped.GetPropValue(source as IRegistroSped, property.Name);
                     var propertyValueToStringSafe = propertyValue.ToStringSafe().Trim();
 
                     var isRequired = spedCampoAttr.IsObrigatorio;
@@ -355,9 +375,10 @@ namespace FiscalBr.Common.Sped
         /// <returns>Linha de arquivo SPED escrita e formatada.</returns>
         public static string EscreverCampos(
             this object source,
-            CodigoVersaoLeiaute version,
+            VersaoLeiauteSped version,
             DateTime? competenciaDeclaracao = null,
-            bool tryTrim = false
+            bool tryTrim = false,
+            bool ignoreErrors = false
             )
         {
             var type = ObtemTipo(source);
@@ -387,67 +408,67 @@ namespace FiscalBr.Common.Sped
                 {
                     if (SomenteParaLeitura(property)) continue;
 
-                    sb.Append("|");
-
                     int versaoEspecifica = version.ToDefaultValue().ToInt();
                     SpedCamposAttribute spedCampoAttr = null;
-                    var attrs = Attribute.GetCustomAttributes(property, typeof(SpedCamposAttribute));
+
+                    var attrs = GetSpedCamposAttribute(property);
 
                     if (attrs.Length > 0)
                     {
-                        if (attrs.Length == 1)
+                        if (ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
                         {
-                            spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeAtual(property);
+                            spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                         }
                         else
                         {
-                            if (ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
+                            while (!ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
                             {
-                                spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
-                            }
-                            else
-                            {
-                                while (!ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
-                                {
-                                    versaoEspecifica--;
+                                versaoEspecifica--;
 
-                                    if (versaoEspecifica < 1)
-                                        break;
-                                }
-
-                                spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
+                                if (versaoEspecifica < 1)
+                                    break;
                             }
+
+                            spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                         }
                     }
+                    else
+                    {
+                        if (ignoreErrors == false)
+                            throw new Exception(string.Format(
+                                "O campo {0} no registro {1} não possui atributo SPED definido!", property.Name, registroAtual));
+                    }
 
-                    if (spedCampoAttr == null)
-                        throw new Exception(string.Format(
-                            "O campo {0} no registro {1} não possui atributo SPED definido!", property.Name, registroAtual));
+                    if (spedCampoAttr != null)
+                    {
+                        sb.Append("|");
+                        var propertyValue = RegistroSped.GetPropValue(source as IRegistroSped, property.Name);
+                        var propertyValueToStringSafe = propertyValue.ToStringSafe().Trim();
 
-                    var propertyValue = RegistroBaseSped.GetPropValue(source, property.Name);
-                    var propertyValueToStringSafe = propertyValue.ToStringSafe().Trim();
+                        var isRequired = spedCampoAttr.IsObrigatorio;
+                        var campoEscrito =
+                            propertyValueToStringSafe.EscreverCampo(
+                                new Tuple<
+                                    InformationType,
+                                    InformationType,
+                                    bool,
+                                    int,
+                                    int>(
+                                    ObtemTipoDoAtributo(spedCampoAttr),
+                                    ObtemTipoDaPropriedade(property),
+                                    isRequired,
+                                    spedCampoAttr.Tamanho,
+                                    spedCampoAttr.QtdCasas
+                                    ));
 
-                    var isRequired = spedCampoAttr.IsObrigatorio;
-                    var campoEscrito =
-                        propertyValueToStringSafe.EscreverCampo(
-                            new Tuple<
-                                InformationType,
-                                InformationType,
-                                bool,
-                                int,
-                                int>(
-                                ObtemTipoDoAtributo(spedCampoAttr),
-                                ObtemTipoDaPropriedade(property),
-                                isRequired,
-                                spedCampoAttr.Tamanho,
-                                spedCampoAttr.QtdCasas
-                                ));
+                        if (ignoreErrors == false)
+                            if (campoEscrito == Constantes.StructuralError)
+                                throw new Exception(string.Format(
+                                    "O campo {0} - {1} no Registro {2} é obrigatório e não foi informado!", spedCampoAttr.Ordem, spedCampoAttr.Campo, registroAtual));
 
-                    if (campoEscrito == Constantes.StructuralError)
-                        throw new Exception(string.Format(
-                            "O campo {0} - {1} no Registro {2} é obrigatório e não foi informado!", spedCampoAttr.Ordem, spedCampoAttr.Campo, registroAtual));
-
-                    sb.Append(campoEscrito);
+                        sb.Append(campoEscrito);
+                    }
+                    spedCampoAttr = null;
                 }
                 sb.Append("|");
                 sb.Append(Environment.NewLine);
@@ -468,7 +489,7 @@ namespace FiscalBr.Common.Sped
         /// <returns>Linha de arquivo SPED escrita e formatada.</returns>
         public static string EscreverCampos(
             this object source,
-            out string errosEncontrados, 
+            out string errosEncontrados,
             DateTime? competenciaDeclaracao = null,
             bool tryTrim = false
             )
@@ -495,7 +516,7 @@ namespace FiscalBr.Common.Sped
 
             var listaComPropriedadesOrdenadas = ObtemListaComPropriedadesOrdenadas(type);
 
-            var availableVersions = (CodigoVersaoLeiaute[])Enum.GetValues(typeof(CodigoVersaoLeiaute));
+            var availableVersions = (VersaoLeiauteSped[])Enum.GetValues(typeof(VersaoLeiauteSped));
             var lastVersion = availableVersions.LastOrDefault();
 
             var sb = new StringBuilder();
@@ -509,19 +530,19 @@ namespace FiscalBr.Common.Sped
 
                     int versaoEspecifica = lastVersion.ToDefaultValue().ToInt();
                     SpedCamposAttribute spedCampoAttr = null;
-                    var attrs = Attribute.GetCustomAttributes(property, typeof(SpedCamposAttribute));
+                    var attrs = GetSpedCamposAttribute(property);
 
                     if (attrs.Length > 0)
                     {
                         if (attrs.Length == 1)
                         {
-                            spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeAtual(property);
+                            spedCampoAttr = ObtemAtributoPropriedadeAtual(property);
                         }
                         else
                         {
                             if (ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
                             {
-                                spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
+                                spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                             }
                             else
                             {
@@ -533,7 +554,7 @@ namespace FiscalBr.Common.Sped
                                         break;
                                 }
 
-                                spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
+                                spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                             }
                         }
                     }
@@ -542,7 +563,7 @@ namespace FiscalBr.Common.Sped
                         throw new Exception(string.Format(
                             "O campo {0} no registro {1} não possui atributo SPED definido!", property.Name, registroAtual));
 
-                    var propertyValue = RegistroBaseSped.GetPropValue(source, property.Name);
+                    var propertyValue = RegistroSped.GetPropValue(source as IRegistroSped, property.Name);
                     var propertyValueToStringSafe = propertyValue.ToStringSafe().Trim();
 
                     var isRequired = spedCampoAttr.IsObrigatorio;
@@ -564,12 +585,12 @@ namespace FiscalBr.Common.Sped
                     if (campoEscrito == Constantes.StructuralError)
                         errosEncontrados +=
                                 string.Format("O campo {0} - {1} no Registro {2} é obrigatório e não foi informado!\n", spedCampoAttr.Ordem, spedCampoAttr.Campo, registroAtual);
-                        else
-                            sb.Append(campoEscrito);
-                    }
+                    else
+                        sb.Append(campoEscrito);
                 }
-                sb.Append("|");
-                sb.Append(Environment.NewLine);
+            }
+            sb.Append("|");
+            sb.Append(Environment.NewLine);
 
             if (errosEncontrados.Length > 0)
                 errosEncontrados =
@@ -589,7 +610,7 @@ namespace FiscalBr.Common.Sped
         /// <returns>Linha de arquivo SPED escrita e formatada.</returns>
         public static string EscreverCampos(
             this object source,
-            CodigoVersaoLeiaute version,
+            VersaoLeiauteSped version,
             out string errosEncontrados,
             DateTime? competenciaDeclaracao = null,
             bool tryTrim = false
@@ -628,19 +649,19 @@ namespace FiscalBr.Common.Sped
 
                     int versaoEspecifica = version.ToDefaultValue().ToInt();
                     SpedCamposAttribute spedCampoAttr = null;
-                    var attrs = Attribute.GetCustomAttributes(property, typeof(SpedCamposAttribute));
+                    var attrs = GetSpedCamposAttribute(property);
 
                     if (attrs.Length > 0)
                     {
                         if (attrs.Length == 1)
                         {
-                            spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeAtual(property);
+                            spedCampoAttr = ObtemAtributoPropriedadeAtual(property);
                         }
                         else
                         {
                             if (ExisteAtributoPropriedadeParaVersao(property, versaoEspecifica))
                             {
-                                spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
+                                spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                             }
                             else
                             {
@@ -652,7 +673,7 @@ namespace FiscalBr.Common.Sped
                                         break;
                                 }
 
-                                spedCampoAttr = (SpedCamposAttribute)ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
+                                spedCampoAttr = ObtemAtributoPropriedadeVersaoAtual(property, versaoEspecifica);
                             }
                         }
                     }
@@ -661,7 +682,7 @@ namespace FiscalBr.Common.Sped
                         throw new Exception(string.Format(
                             "O campo {0} no registro {1} não possui atributo SPED definido!", property.Name, registroAtual));
 
-                    var propertyValue = RegistroBaseSped.GetPropValue(source, property.Name);
+                    var propertyValue = RegistroSped.GetPropValue(source as IRegistroSped, property.Name);
                     var propertyValueToStringSafe = propertyValue.ToStringSafe().Trim();
 
                     var isRequired = spedCampoAttr.IsObrigatorio;
